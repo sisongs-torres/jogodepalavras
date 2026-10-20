@@ -2,7 +2,7 @@ const WORD_BANK = {
   animais: ['PANDA', 'TIGRE', 'ZEBRA', 'GATO', 'PEIXE', 'PAVAO', 'LEBRE', 'AGUIA'],
   comida: ['PIZZA', 'PASTA', 'TORTA', 'MELAO', 'BISCO', 'SALSA', 'PUDIM', 'CACAU'],
   ciencia: ['ATOMO', 'TERRA', 'MUNDO', 'RADAR', 'SOLAR', 'METAL', 'FUSAO', 'QUARK', 'ONDAS'],
-  esportes: ['VOLEI', 'TENIS', 'GOLFE', 'JUDO', 'RUGBY', 'BOLAO', 'POLOS', 'NADOS']
+  esportes: ['VOLEI', 'TENIS', 'GOLFE', 'JUDOS', 'RUGBY', 'BOLAO', 'POLOS', 'NADOS']
 };
 
 const categories = ['animais', 'comida', 'ciencia', 'esportes'];
