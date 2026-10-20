@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jardim das Palavras</title>
+    <meta name="description" content="Jogo casual de adivinhação de palavras com tema diário, streak e compartilhamento leve." />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar" aria-label="Cabecalho do jogo">
+        <div class="brand-block">
+          <span class="brand-mark">J</span>
+          <div>
+            <p class="eyebrow">Jogo do dia</p>
+            <h1>Jardim das Palavras</h1>
+          </div>
+        </div>
+        <div class="status-group">
+          <div class="status-badge">
+            <span class="dot"></span>
+            <span id="themeLabel">Animais</span>
+          </div>
+          <div class="status-badge subtle" aria-label="streak atual">
+            🔥 <span id="streakValue">0</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+        <section id="startScreen" class="screen active" aria-labelledby="startTitle">
+          <div class="card hero-card">
+            <p class="mini-label">Palavra do dia</p>
+            <h2 id="startTitle">Descubra a palavra secreta</h2>
+            <p class="lead">Tente adivinhar a palavra do tema de hoje em até 6 palpites. Cada letra recebe um feedback claro para te orientar.</p>
+            <div class="callout">
+              <span class="callout-label">Tema</span>
+              <strong id="startCategory">Animais</strong>
+            </div>
+            <ul class="rules">
+              <li>Uma palavra por dia</li>
+              <li>6 tentativas</li>
+              <li>Feedback por cor e posição</li>
+            </ul>
+            <div class="mode-grid" aria-label="Escolha a modalidade">
+              <button class="mode-btn active" type="button" data-mode="animais">Animais</button>
+              <button class="mode-btn" type="button" data-mode="comida">Comida</button>
+              <button class="mode-btn" type="button" data-mode="ciencia">Ciência</button>
+              <button class="mode-btn" type="button" data-mode="esportes">Esportes</button>
+            </div>
+            <button id="startButton" class="primary-btn" type="button">Iniciar partida</button>
+          </div>
+        </section>
+
+        <section id="gameScreen" class="screen" aria-live="polite" aria-label="Área de jogo">
+          <div class="card game-card">
+            <div class="meta-row">
+              <div>
+                <p class="mini-label">Categoria</p>
+                <strong id="gameCategory">Animais</strong>
+              </div>
+              <div>
+                <p class="mini-label">Letras</p>
+                <strong id="wordLength">5</strong>
+              </div>
+              <div>
+                <p class="mini-label">Tentativas</p>
+                <strong id="attemptsLeft">6</strong>
+              </div>
+            </div>
+
+            <div id="board" class="board" aria-label="Grade de tentativas"></div>
+
+            <form id="guessForm" class="guess-form" novalidate>
+              <label class="sr-only" for="guessInput">Sua tentativa</label>
+              <input
+                id="guessInput"
+                name="guess"
+                type="text"
+                maxlength="5"
+                inputmode="text"
+                autocomplete="off"
+                aria-label="Digite uma palavra"
+                placeholder="Digite sua tentativa"
+              />
+              <button class="primary-btn" type="submit">Enviar</button>
+            </form>
+
+            <div id="message" class="message" role="status" aria-live="polite"></div>
+
+            <div class="keyboard" aria-label="Teclado virtual">
+              <div class="keyboard-row">
+                <button type="button" class="key" data-key="Q">Q</button>
+                <button type="button" class="key" data-key="W">W</button>
+                <button type="button" class="key" data-key="E">E</button>
+                <button type="button" class="key" data-key="R">R</button>
+                <button type="button" class="key" data-key="T">T</button>
+                <button type="button" class="key" data-key="Y">Y</button>
+                <button type="button" class="key" data-key="U">U</button>
+                <button type="button" class="key" data-key="I">I</button>
+                <button type="button" class="key" data-key="O">O</button>
+                <button type="button" class="key" data-key="P">P</button>
+              </div>
+              <div class="keyboard-row">
+                <button type="button" class="key" data-key="A">A</button>
+                <button type="button" class="key" data-key="S">S</button>
+                <button type="button" class="key" data-key="D">D</button>
+                <button type="button" class="key" data-key="F">F</button>
+                <button type="button" class="key" data-key="G">G</button>
+                <button type="button" class="key" data-key="H">H</button>
+                <button type="button" class="key" data-key="J">J</button>
+                <button type="button" class="key" data-key="K">K</button>
+                <button type="button" class="key" data-key="L">L</button>
+              </div>
+              <div class="keyboard-row last-row">
+                <button type="button" class="key wide" data-action="clear">Limpar</button>
+                <button type="button" class="key" data-key="Z">Z</button>
+                <button type="button" class="key" data-key="X">X</button>
+                <button type="button" class="key" data-key="C">C</button>
+                <button type="button" class="key" data-key="V">V</button>
+                <button type="button" class="key" data-key="B">B</button>
+                <button type="button" class="key" data-key="N">N</button>
+                <button type="button" class="key" data-key="M">M</button>
+                <button type="button" class="key wide" data-action="backspace">⌫</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="resultScreen" class="screen" aria-labelledby="resultTitle">
+          <div class="card result-card">
+            <p class="mini-label">Resultado</p>
+            <h2 id="resultTitle">Você venceu!</h2>
+            <p id="resultSummary" class="lead">Você resolveu a palavra do dia.</p>
+            <div class="final-panel">
+              <div>
+                <span class="label">Tema</span>
+                <strong id="finalCategory">Animais</strong>
+              </div>
+              <div>
+                <span class="label">Resposta</span>
+                <strong id="finalWord">LEÃO</strong>
+              </div>
+              <div>
+                <span class="label">Tentativas</span>
+                <strong id="finalAttempts">4</strong>
+              </div>
+            </div>
+            <div class="result-actions">
+              <button id="shareButton" class="secondary-btn" type="button">Compartilhar</button>
+              <button id="playAgainButton" class="primary-btn" type="button">Jogar de novo</button>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <aside class="stats-panel card" aria-labelledby="statsTitle">
+        <h3 id="statsTitle">Estatísticas</h3>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <span>Vitórias</span>
+            <strong id="winsValue">0</strong>
+          </div>
+          <div class="stat-box">
+            <span>Partidas</span>
+            <strong id="gamesValue">0</strong>
+          </div>
+          <div class="stat-box">
+            <span>Melhor streak</span>
+            <strong id="bestStreakValue">0</strong>
+          </div>
+          <div class="stat-box">
+            <span>Taxa de acerto</span>
+            <strong id="winRateValue">0%</strong>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

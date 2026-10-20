@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Protótipos do Jogo de Palavras</title>
+    <style>
+      :root {
+        --bg: #f4efe8;
+        --panel: #ffffff;
+        --ink: #1d2a2f;
+        --muted: #58707b;
+        --primary: #2f7d67;
+        --secondary: #f2c14e;
+        --accent: #ef7d5f;
+        --shadow: rgba(19, 32, 36, 0.12);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(180deg, #f9f5ee 0%, #eef6f3 100%);
+        color: var(--ink);
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 32px 20px 60px;
+      }
+      h1 {
+        margin: 0 0 12px;
+        font-size: clamp(2rem, 5vw, 3.3rem);
+      }
+      .subtitle {
+        margin: 0 0 28px;
+        color: var(--muted);
+        font-size: 1.05rem;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 22px;
+      }
+      .card {
+        background: var(--panel);
+        border-radius: 24px;
+        padding: 20px;
+        box-shadow: 0 18px 28px var(--shadow);
+      }
+      .badge {
+        display: inline-block;
+        padding: 8px 12px;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+      .concept-1 .badge { background: #e8f6f0; color: #1f6d5e; }
+      .concept-2 .badge { background: #edf2ff; color: #4153cb; }
+      .concept-3 .badge { background: #f9efe1; color: #8a6320; }
+      .screen {
+        border: 1px solid rgba(29, 42, 47, 0.08);
+        border-radius: 18px;
+        background: linear-gradient(180deg, #fff, #f6f7f8);
+        padding: 16px;
+      }
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.8rem;
+        color: var(--muted);
+        margin-bottom: 16px;
+      }
+      .pulse {
+        width: 10px; height: 10px; border-radius: 50%;
+        background: var(--primary); display: inline-block; margin-right: 8px;
+      }
+      .title-block {
+        display: flex; align-items: center; justify-content: space-between; gap: 12px;
+        margin-bottom: 20px;
+      }
+      .title-block h2 {
+        margin: 0;
+        font-size: clamp(1.4rem, 3vw, 2.1rem);
+      }
+      .pill {
+        background: #f4f4f3; border-radius: 999px; padding: 8px 12px; font-weight: 700; font-size: 0.8rem;
+      }
+      .rule {
+        background: #f5fbf8; border: 1px dashed #b9dabe; border-radius: 12px; padding: 10px 12px;
+        color: #1f5d49; font-size: 0.9rem; margin-bottom: 14px;
+      }
+      .letters {
+        display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin-bottom: 12px;
+      }
+      .letter {
+        display: flex; align-items: center; justify-content: center; height: 52px; border-radius: 12px; font-size: 1.4rem; font-weight: 700;
+      }
+      .ok { background: #7ad6a0; color: #0d3d2a; }
+      .warn { background: #f5d26a; color: #4d3c0a; }
+      .miss { background: #dfe5ea; color: #456074; }
+      .empty { background: #f4f4f4; border: 1px solid #dfe3e7; color: #5a6970; }
+      .button-row {
+        display: flex; gap: 10px; margin-top: 16px;
+      }
+      .primary, .ghost {
+        border: none; border-radius: 12px; padding: 12px 16px; font-weight: 700; cursor: pointer;
+      }
+      .primary { background: var(--primary); color: white; }
+      .ghost { background: #eef3f5; color: var(--ink); }
+      .stats {
+        display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 14px;
+      }
+      .stat {
+        background: #f2f7f6; border-radius: 12px; padding: 10px; text-align: center;
+      }
+      .stat strong { display: block; font-size: 1.15rem; }
+      .concept-2 .screen { background: linear-gradient(180deg, #eef1ff, #f5f7ff); }
+      .concept-2 .primary { background: #4f5bd5; }
+      .concept-2 .ok { background: #7cdbd4; }
+      .concept-2 .warn { background: #ffce6f; }
+      .concept-3 .screen { background: linear-gradient(180deg, #fffaf2, #f9f4eb); }
+      .concept-3 .primary { background: #9c6d32; }
+      .concept-3 .ok { background: #b4d595; }
+      .concept-3 .warn { background: #e6c88d; }
+      ul {
+        padding-left: 18px; color: var(--muted);
+        line-height: 1.6;
+      }
+      .legend { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+      .legend span { display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--muted); }
+      .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Protótipos de interface</h1>
+      <p class="subtitle">Três versões de um jogo casual de adivinhação de palavras para comparar clareza, emoção e acessibilidade.</p>
+
+      <div class="grid">
+        <article class="card concept-1">
+          <div class="badge">Conceito 1</div>
+          <div class="screen">
+            <div class="topbar"><span><span class="pulse"></span>Jardim das Palavras</span> <span>Categoria: Animais</span></div>
+            <div class="title-block">
+              <h2>Descubra a palavra</h2>
+              <span class="pill">5 letras</span>
+            </div>
+            <div class="rule">A letra correta aparece em verde; se estiver em outra posição, em amarelo; se não estiver, em cinza.</div>
+            <div class="letters">
+              <div class="letter ok">L</div>
+              <div class="letter warn">E</div>
+              <div class="letter miss">A</div>
+              <div class="letter empty">O</div>
+              <div class="letter empty">?</div>
+            </div>
+            <div class="letters">
+              <div class="letter empty">A</div>
+              <div class="letter empty">N</div>
+              <div class="letter empty">I</div>
+              <div class="letter empty">M</div>
+              <div class="letter empty">A</div>
+            </div>
+            <div class="button-row">
+              <button class="primary">Enviar</button>
+              <button class="ghost">Ajuda</button>
+            </div>
+            <div class="stats">
+              <div class="stat"><strong>3</strong> tentativas</div>
+              <div class="stat"><strong>7</strong> dias</div>
+              <div class="stat"><strong>86%</strong> acertos</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card concept-2">
+          <div class="badge">Conceito 2</div>
+          <div class="screen">
+            <div class="topbar"><span><span class="pulse"></span>Missão de Palavras</span> <span>Fase 04</span></div>
+            <div class="title-block">
+              <h2>Desafio da floresta</h2>
+              <span class="pill">Tema</span>
+            </div>
+            <div class="rule">Aventure-se pela trilha e descubra a palavra secreta da jornada.</div>
+            <div class="letters">
+              <div class="letter ok">P</div>
+              <div class="letter empty">A</div>
+              <div class="letter warn">N</div>
+              <div class="letter empty">D</div>
+              <div class="letter empty">A</div>
+            </div>
+            <div class="letters">
+              <div class="letter empty">T</div>
+              <div class="letter empty">I</div>
+              <div class="letter empty">G</div>
+              <div class="letter empty">R</div>
+              <div class="letter empty">E</div>
+            </div>
+            <div class="button-row">
+              <button class="primary">Tentar</button>
+              <button class="ghost">Mapa</button>
+            </div>
+            <div class="legend">
+              <span><i class="dot" style="background:#7cdbd4"></i> certo</span>
+              <span><i class="dot" style="background:#ffce6f"></i> perto</span>
+              <span><i class="dot" style="background:#dfe5ea"></i> ausente</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card concept-3">
+          <div class="badge">Conceito 3</div>
+          <div class="screen">
+            <div class="topbar"><span><span class="pulse"></span>Papel &amp; Tinta</span> <span>Foco</span></div>
+            <div class="title-block">
+              <h2>Palavra do dia</h2>
+              <span class="pill">Café</span>
+            </div>
+            <div class="rule">Use as pistas com cuidado: cada ajuda vale a sua estratégia.</div>
+            <div class="letters">
+              <div class="letter ok">C</div>
+              <div class="letter miss">A</div>
+              <div class="letter empty">F</div>
+              <div class="letter empty">É</div>
+              <div class="letter warn">?</div>
+            </div>
+            <div class="letters">
+              <div class="letter empty">B</div>
+              <div class="letter empty">O</div>
+              <div class="letter empty">L</div>
+              <div class="letter empty">O</div>
+              <div class="letter empty">?</div>
+            </div>
+            <div class="button-row">
+              <button class="primary">Enviar</button>
+              <button class="ghost">Pista</button>
+            </div>
+            <ul>
+              <li>feedback claro em letras e contexto</li>
+              <li>estilo mais editorial e relaxante</li>
+              <li>acessível para leitura longa e lenta</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
